@@ -1,7 +1,7 @@
 {
   "name": "until-connected",
   "type": "module",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Wait for a connection at the given target without making any requests.",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",

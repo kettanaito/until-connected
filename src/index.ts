@@ -30,16 +30,16 @@ export type Options = {
  *
  * @example
  * // Wait until the server is running at port 3000.
- * waitForConnection({ target: 3000 })
+ * untilConnected({ target: 3000 })
  *
  * // Wait until the server is running at the address.
- * waitForConnection({ target: 'http://127.0.0.1:56789' })
+ * untilConnected({ target: 'http://127.0.0.1:56789' })
  *
  * // Control the maximum number of retries before rejecting.
  * // When using 1, this will reject if the server isn't already running.
- * waitForConnection({ target: 3000, maxRetries: 1 })
+ * untilConnected({ target: 3000, maxRetries: 1 })
  */
-export function waitForConnection(options: Options): Promise<void> {
+export function untilConnected(options: Options): Promise<void> {
   const { port, host } = resolveConnectionOptions(options)
   let maxRetries = options.maxRetries || 5
   let retries = 0

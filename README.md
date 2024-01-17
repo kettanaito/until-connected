@@ -1,4 +1,4 @@
-# Wait For Connection
+# Until Connected
 
 Wait for a connection at the given target without making any requests.
 
@@ -31,19 +31,19 @@ This module solves this problem by relying on establishing a socket connection (
 ## Usage
 
 ```sh
-npm i wait-for-connection
+npm i until-connected
 ```
 
 ```js
 import { exec } from 'node:child_process'
-import { waitForConnection } from 'wait-for-connection'
+import { untilConnected } from 'until-connected'
 
 async function runServerThenTest(runCommand, url, testCommand) {
   // Start the application server.
   exec(runCommand)
 
   // Wait for the application server to be running.
-  await waitForConnection({ target: url })
+  await untilConnected({ target: url })
 
   // Run the tests.
   exec(testCommand)
@@ -52,19 +52,19 @@ async function runServerThenTest(runCommand, url, testCommand) {
 
 ## API
 
-### `waitForConnection(options)`
+### `untilConnected(options)`
 
 Returns a Promise that resolves if the connection was successful and rejects if it wasn't, given additional options.
 
 ```js
 // Wait for the application on port 3000.
-await waitForConnection({ target: 3000 })
+await untilConnected({ target: 3000 })
 ```
 
 The returned Promise rejects if the connection couldn't be established or if it fails for any other reason. The original connection error is exposed under `error.cause` on the Promise:
 
 ```js
-waitForConnection({ target: 3000 }).catch((error) => {
+untilConnected({ target: 3000 }).catch((error) => {
   console.log('Original connection error:', error.cause)
 })
 ```
@@ -79,12 +79,12 @@ A target to await. Supports a standalone port number and a full URL string or a 
 
 ```js
 // Wait for the application on port 3000.
-await waitForConnection({
+await untilConnected({
   target: 3000,
 })
 
 // Wait for the application at the address.
-await waitForConnection({
+await untilConnected({
   target: 'http://localhost:56789',
 })
 ```
@@ -96,7 +96,7 @@ await waitForConnection({
 Maximum number of retries before rejecting the connection Promise.
 
 ```js
-await waitForConnection({
+await untilConnected({
   port: 3000,
   // By using 1, the wait function will reject
   // if the connection fails after the first attempt.
@@ -111,7 +111,7 @@ await waitForConnection({
 An interval between connection retries.
 
 ```js
-await waitForConnection({
+await untilConnected({
   target: 3000,
   // Wait for 500ms after a failed connection
   // before attempting another connection.

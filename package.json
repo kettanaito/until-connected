@@ -1,0 +1,32 @@
+{
+  "name": "wait-for-connection",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./build/index.js",
+  "scripts": {
+    "test": "vitest",
+    "clean": "rimraf ./build",
+    "build": "pnpm clean && tsc -p ./tsconfig.build.json"
+  },
+  "files": [
+    "./build",
+    "./src"
+  ],
+  "keywords": [
+    "connect",
+    "wait",
+    "retry",
+    "ping",
+    "probe",
+    "server",
+    "test"
+  ],
+  "author": "Artem Zakharchenko <me@kettanaito.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.11.5",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.0"
+  }
+}

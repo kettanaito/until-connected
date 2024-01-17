@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "composite": true,
+    "module": "nodenext",
+    "target": "esnext",
+    "moduleResolution": "nodenext"
+  },
+  "include": ["./src"],
+  "exclude": ["node_modules"]
+}

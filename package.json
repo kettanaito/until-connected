@@ -1,8 +1,10 @@
 {
   "name": "wait-for-connection",
+  "type": "module",
   "version": "1.0.0",
-  "description": "",
+  "description": "Wait for a connection at the given target without making any requests.",
   "main": "./build/index.js",
+  "types": "./build/index.d.ts",
   "scripts": {
     "test": "vitest",
     "clean": "rimraf ./build",

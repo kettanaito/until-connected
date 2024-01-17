@@ -5,8 +5,10 @@ export async function createServer(
   host?: string
 ): Promise<http.Server> {
   const server = http.createServer((req, res) => {
-    res.statusCode = 405
-    res.end()
+    res.writeHead(200)
+    // Intentionally keep any request pending forever.
+    // You mustn't make any requests to the application
+    // to verify that it's running.
   })
 
   return new Promise((resolve, reject) => {

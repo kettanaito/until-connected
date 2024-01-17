@@ -8,7 +8,8 @@
   "scripts": {
     "test": "vitest",
     "clean": "rimraf ./build",
-    "build": "pnpm clean && tsc -p ./tsconfig.build.json"
+    "build": "pnpm clean && tsc -p ./tsconfig.build.json",
+    "release": "release publish"
   },
   "files": [
     "./build",
@@ -26,6 +27,7 @@
   "author": "Artem Zakharchenko <me@kettanaito.com>",
   "license": "MIT",
   "devDependencies": {
+    "@ossjs/release": "^0.8.0",
     "@types/node": "^20.11.5",
     "rimraf": "^5.0.5",
     "typescript": "^5.3.3",

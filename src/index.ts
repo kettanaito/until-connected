@@ -43,7 +43,7 @@ export async function untilConnected(options: Options): Promise<void> {
   const { port, host } = resolveConnectionOptions(options)
   const maxRetries = options.maxRetries || 5
 
-  let connectionError = null
+  let connectionError: Error | undefined
   for (let retry = 0; retry < maxRetries; retry++) {
     if (retry && options.connectionInterval) {
       await new Promise<void>((resolve) => setTimeout(resolve, options.connectionInterval))
@@ -51,7 +51,7 @@ export async function untilConnected(options: Options): Promise<void> {
     try {
       return await connect(port, host)
     } catch (error) {
-      connectionError = error
+      connectionError = error as Error
     }
   }
 

@@ -54,7 +54,9 @@ export async function untilConnected(options: Options): Promise<void> {
     try {
       return await connect(port, host)
     } catch (error) {
-      connectionError = error as Error
+      if (error instanceof Error) {
+        connectionError = error
+      }
     }
   }
 

@@ -39,36 +39,33 @@ export type Options = {
  * // When using 1, this will reject if the server isn't already running.
  * untilConnected({ target: 3000, maxRetries: 1 })
  */
-export function untilConnected(options: Options): Promise<void> {
+export async function untilConnected(options: Options): Promise<void> {
   const { port, host } = resolveConnectionOptions(options)
-  let maxRetries = options.maxRetries || 5
-  let retries = 0
+  const maxRetries = options.maxRetries || 5
 
-  function connectOrRetry(): Promise<void> {
-    retries++
+  let connectionError: Error | undefined
 
-    return connect(port, host).catch(async (connectionError) => {
-      if (retries === maxRetries) {
-        const error = new Error(
-          `Failed to await connection at ${
-            host || ''
-          }:${port}. Connection never established (retries: ${retries}).`,
-          { cause: connectionError }
-        )
-        throw error
+  for (let retry = 0; retry < maxRetries; retry++) {
+    if (retry && 'connectionInterval' in options) {
+      await new Promise<void>((resolve) =>
+        setTimeout(resolve, options.connectionInterval)
+      )
+    }
+    try {
+      return await connect(port, host)
+    } catch (error) {
+      if (error instanceof Error) {
+        connectionError = error
       }
-
-      if (options.connectionInterval) {
-        await new Promise<void>((resolve) => {
-          setTimeout(resolve, options.connectionInterval)
-        })
-      }
-
-      return connectOrRetry()
-    })
+    }
   }
 
-  return connectOrRetry()
+  throw new Error(
+    `Failed to await connection at ${
+      host || ''
+    }:${port}. Connection never established (retries: ${maxRetries}).`,
+    { cause: connectionError }
+  )
 }
 
 function resolveConnectionOptions(options: Options): {

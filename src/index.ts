@@ -44,9 +44,12 @@ export async function untilConnected(options: Options): Promise<void> {
   const maxRetries = options.maxRetries || 5
 
   let connectionError: Error | undefined
+
   for (let retry = 0; retry < maxRetries; retry++) {
-    if (retry && options.connectionInterval) {
-      await new Promise<void>((resolve) => setTimeout(resolve, options.connectionInterval))
+    if (retry && 'connectionInterval' in options) {
+      await new Promise<void>((resolve) =>
+        setTimeout(resolve, options.connectionInterval)
+      )
     }
     try {
       return await connect(port, host)
@@ -56,7 +59,9 @@ export async function untilConnected(options: Options): Promise<void> {
   }
 
   throw new Error(
-    `Failed to await connection at ${host || ''}:${port}. Connection never established (retries: ${maxRetries}).`,
+    `Failed to await connection at ${
+      host || ''
+    }:${port}. Connection never established (retries: ${maxRetries}).`,
     { cause: connectionError }
   )
 }
